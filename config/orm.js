@@ -5,7 +5,7 @@ function printQuestionMarks(num) {
 	var arr = [];
 
 	for (var i = 0; i < num; i++) {
-		arr.push('?');
+		arr.push("?");
 	}
 	return arr.toString();
 }
@@ -16,7 +16,7 @@ function objToSql(ob) {
 
 	for (var key in ob) {
 		if (ob.hasOwnProperty(key)) {
-			arr.push(key + '=' + ob[key]);
+			arr.push(key + "=" + ob[key]);
 		}
 	}
 	return arr.toString();
@@ -25,8 +25,8 @@ function objToSql(ob) {
 // define our orm that will be exported to the burgers.js model
 var orm = {
 	// selectAll function for grabbing everything from the table
-	all: function(tableInput, cb) {
-		var queryString = 'SELECT * FROM ' + tableInput + ';';
+	selectAll: function(tableInput, cb) {
+		var queryString = "SELECT * FROM " + tableInput + ";";
 		connection.query(queryString, function(err, result) {
 			if (err) throw err;
 			// send the query result back to the callback function
@@ -34,16 +34,16 @@ var orm = {
 		});
 	},
 	// insertOne function for inserting one burger into table
-	create: function(table, cols, vals, cb) {
-		var queryString = 'INSERT INTO ' + table;
+	insertOne: function(table, cols, vals, cb) {
+		var queryString = "INSERT INTO " + table;
 
-		queryString += ' (';
+		queryString += " (";
 		queryString += cols.toString();
-		queryString += ') ';
-		queryString += 'VALUES (';
+		queryString += ") ";
+		queryString += "VALUES (";
 		// queryString += vals[0] + ' , ' + vals[1];
 		queryString += printQuestionMarks(vals.length);
-		queryString += ') ';
+		queryString += ") ";
 
 		console.log(queryString);
 		console.log(vals);
@@ -58,12 +58,12 @@ var orm = {
 	},
 
 	// update one function for changing a burger status
-	update: function(table, objColVals, condition, cb) {
-		var queryString = 'UPDATE ' + table;
+	updateOne: function(table, objColVals, condition, cb) {
+		var queryString = "UPDATE " + table;
 
-		queryString += ' SET ';
+		queryString += " SET ";
 		queryString += objToSql(objColVals);
-		queryString += ' WHERE ';
+		queryString += " WHERE ";
 		queryString += condition;
 		console.log(queryString);
 
